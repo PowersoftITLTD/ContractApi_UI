@@ -81,6 +81,23 @@ namespace ContractBudgetApi.Model
 
         [JsonPropertyName("boqOrder")]
         public decimal BoqOrder { get; set; }
+
+        //[JsonPropertyName("totalBudget")]
+        //public decimal? totalBudget { get; set; }
+
+        //[JsonPropertyName("totalCommitted")]
+        //public decimal? totalCommitted { get; set; }
+
+        //[JsonPropertyName("totalAvailable")]
+        //public decimal? totalAvailable { get; set; }
+
+        //[JsonPropertyName("totalVendor")]
+        //public decimal? totalVendor { get; set; }
+
+        //[JsonPropertyName("totalAlert")]
+        //public decimal? totalAlert { get; set; }
+
+
     }
 
     // -------------------- Detailed Project Data (per project id) --------------------
@@ -164,6 +181,11 @@ namespace ContractBudgetApi.Model
         // Additional fields found in TWR but not FWG (like poUnit, etc.) – we can add optional
         [JsonPropertyName("poUnit")]
         public string PoUnit { get; set; } = "₹ Lakh";
+
+        [JsonPropertyName("projecttotalCount")]
+        public ProjectTotalCount projectTotal { get; set; }
+
+
     }
     // -------------------- ProjectInfo --------------------
     public class ProjectInfo
@@ -534,7 +556,7 @@ namespace ContractBudgetApi.Model
     {
         [JsonPropertyName("projectId")]
         [JsonIgnore]
-        public string? project_id { get; set;}
+        public string? project_id { get; set; }
 
         [JsonPropertyName("no")]
         public string No { get; set; }
@@ -814,7 +836,7 @@ namespace ContractBudgetApi.Model
     {
         [JsonPropertyName("project_Id")]
         [JsonIgnore]
-        public string ? project_id { get; set;}
+        public string? project_id { get; set; }
 
         [JsonPropertyName("refno")]
         [JsonIgnore]
@@ -971,7 +993,7 @@ namespace ContractBudgetApi.Model
         [JsonPropertyName("responsible")]
         public string Responsible { get; set; }
         [JsonPropertyName("status")]
-        public string? status { get; set;}
+        public string? status { get; set; }
 
         //[JsonPropertyName("lineCount")]
         //public int? lineCount { get; set; }
@@ -1092,6 +1114,35 @@ namespace ContractBudgetApi.Model
         //Root root = JsonSerializer.Deserialize<Root>(jsonString, options);
     }
 
+    public class ProjectTotalCount
+    {
+        [JsonPropertyName("totalbudget")]
+        public decimal? TotalBudget { get; set; }
+
+        [JsonPropertyName("totalcommitted")]
+        public decimal? TotalCommited { get; set; }
+        [JsonPropertyName("totalAvailable")]
+        public decimal? TotalAvailable { get; set; }
+        [JsonPropertyName("totalvendor")]
+        public decimal? TotalVendor { get; set; }
+
+        [JsonPropertyName("totalalert")]
+        public decimal? totalAlert { get; set; }
+
+        [JsonPropertyName("committedPer")]
+        public decimal? CommittedPer { get; set;}
+
+        [JsonPropertyName("UncommittedPer")]
+        public decimal? UnCommitedPer { get; set; }
+
+
+        [JsonPropertyName("totalbilled")]
+        public decimal? TotalBilled { get; set; }
+
+
+        [JsonPropertyName("billedPer")]
+        public decimal? BilledPer { get; set; }
+    }
 
 
 }

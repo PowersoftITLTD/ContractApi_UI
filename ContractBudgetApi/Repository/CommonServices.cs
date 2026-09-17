@@ -539,6 +539,7 @@ namespace ContractBudgetApi.Repository
                     var invoicelist = await GetInvoicesItemDataAsync();
                     var billedDetailsList = await GetBilledDetailsDataAsync();
                     var vendorList = await GetVendorsDataAsync();
+                    var projectCount = await GetProjectTotalCountDataAsync();
                     //BoqTot? boq = boqResponse.Data as BoqTot;
                     if (result != null && result.Any())
                     {
@@ -569,6 +570,7 @@ namespace ContractBudgetApi.Repository
                                                          Wos = Convert.ToInt32(g.First().wos),
                                                          BoqDesign = Convert.ToDecimal(g.First().boq_design),
                                                          BoqOrder = Convert.ToDecimal(g.First().boq_order),
+                                                        // Alerts= 
                                                      })
                                                      .ToList();
 
@@ -603,6 +605,7 @@ namespace ContractBudgetApi.Repository
                                                                   Invoices= invoicelist.Where(x=>x.project_id== g.Key).ToList() ,
                                                                   BilledDetails= BuildBilledDetails(billedDetailsList.Where(x=>x.project_id== g.Key)) ,
                                                                   Vendors= vendorList.Where(x=>x.project_id== g.Key).ToList(),
+                                                                  projectTotal= projectCount
                                                               });
 
 
@@ -1178,5 +1181,32 @@ namespace ContractBudgetApi.Repository
                 throw;
             }
         }
+
+
+
+        public async Task<ProjectTotalCount> GetProjectTotalCountDataAsync()
+        {
+            try
+            {
+                string query = @"
+                               SELECT * FROM [CockpitMart].[dbo].[v_project_totalCount];";   // matches your original ordering (by first column descending)
+                using (var connection = _dbConnection.CreateConnection())
+                {
+                    var result = await connection.QueryFirstAsync<ProjectTotalCount>(query);
+                    // Three Value is missing in this View AsnNo , wo ,po, woval 
+
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
+
     }
+    
 }
