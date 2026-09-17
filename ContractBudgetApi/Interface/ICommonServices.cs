@@ -25,7 +25,7 @@ namespace ContractBudgetApi.Interface
         // Mapping DocumentUploadModel to DocumentUploadCryptoDto
         // Task<DocumentUploadCryptoDto> MapToCryptoDto(DocumentUploadModel model);
         //List<(string FileName, byte[] FileBytes)> DecryptFileDataWithNamesList(List<string> encryptedFilesBase64, string keyString);
-        Task<Root> GetBudgetSatementData();
+       // Task<Root> GetBudgetSatementData();
         Task<CommonResponse> GetProjectDataAsync(string sessionUserId, string parameter1);
     }
 }
