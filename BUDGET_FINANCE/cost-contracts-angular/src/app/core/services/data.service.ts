@@ -10,7 +10,7 @@ export class DataService {
   projectId = signal<string>('FWG');
   scope     = signal<Scope>('entity');
   loader    = signal<boolean>(false); // loader state
-  level = signal<'summary' | 'group' | 'code' | 'wopo_details' | 'wopojv'>('summary');
+  level = signal<'summary' | 'group' | 'code' | 'wopo_details' | 'wopojv' | 'wopo_details_9ser' | 'wopojv_9series'>('summary');
   
   payload  = computed(() => this._payload());
   projects = computed(() => this._payload()?.projects ?? []);

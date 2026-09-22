@@ -29,7 +29,11 @@ import { DataService } from '../core/services/data.service';
       <span class="nav-ic">▤</span>
       <span *ngIf="docked">Budget & Finance</span>
     </a>
-   <a class="nav-item" routerLink="/boq" routerLinkActive="active"><span class="nav-ic">⇄</span>BOQ Comparison</a>
+    
+   <a class="nav-item" routerLink="/boq" routerLinkActive="active">
+    <span class="nav-ic">⇄</span>
+   <span *ngIf="docked">BOQ Comparison</span>
+  </a>
      <!-- <div class="sb-section">Procure to Pay</div> -->
     <!-- <a class="nav-item" routerLink="/vendors" routerLinkActive="active"><span class="nav-ic">◆</span>Contractors</a> -->
     <!-- <a class="nav-item" routerLink="/work-orders" routerLinkActive="active"><span class="nav-ic">▭</span>Work Orders</a>

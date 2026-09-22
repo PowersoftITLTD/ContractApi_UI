@@ -176,6 +176,7 @@ export interface BudgetRow {
   D: number;  // Billed part 2
   E: number;  // Other
   avail: number;
+   unappr?:number; unposted?:number;
 }
 
 export interface Project {
