@@ -510,8 +510,6 @@ namespace ContractBudgetApi.Repository
             }
         }
 
-
-
         public async Task<CommonResponse> GetProjectDataAsync(string sessionUserId, string parameter1)
         {
             var commonresponse = new CommonResponse();
@@ -570,7 +568,11 @@ namespace ContractBudgetApi.Repository
                                                          Wos = Convert.ToInt32(g.First().wos),
                                                          BoqDesign = Convert.ToDecimal(g.First().boq_design),
                                                          BoqOrder = Convert.ToDecimal(g.First().boq_order),
-                                                        // Alerts= 
+                                                         DirectExpense= "XX" ,
+                                                         ConstructionAreaRate= "XX",
+                                                         CarpetAreaRate= "XX",
+
+                                                         // Alerts= 
                                                      })
                                                      .ToList();
 
@@ -761,7 +763,9 @@ namespace ContractBudgetApi.Repository
                             C = x.c ?? 0,
                             D = x.d ?? 0,
                             E = x.e ?? 0,
-                            F = x.f ?? 0
+                            F = x.f ?? 0 ,
+                            Unappr = x.Unappr ?? 0,
+                            Unposted = x.Unposted ?? 0
                         }).ToList()
                     });
         }

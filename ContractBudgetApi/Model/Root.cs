@@ -97,6 +97,14 @@ namespace ContractBudgetApi.Model
         //[JsonPropertyName("totalAlert")]
         //public decimal? totalAlert { get; set; }
 
+        [JsonPropertyName("directExpense")]
+        public string? DirectExpense { get; set; } = "XX";
+
+        [JsonPropertyName("constructionAreaRate")]
+        public string? ConstructionAreaRate { get; set; } = "XX";
+
+        [JsonPropertyName("carpetAreaRate")]
+        public string? CarpetAreaRate { get; set; } = "XX";
 
     }
 
@@ -385,6 +393,14 @@ namespace ContractBudgetApi.Model
 
         [JsonPropertyName("avail")]
         public decimal Avail { get; set; }
+
+        [JsonPropertyName("contructionAreaRate")]
+        public string? ContructionAreaRate { get; set; } = "XX";
+
+        [JsonPropertyName("carpetAreaRate")]
+        public string? CarpetAreaRate { get; set; } = "XX";
+
+
     }
 
     // -------------------- BudgetTreeItem --------------------
@@ -433,6 +449,12 @@ namespace ContractBudgetApi.Model
 
         [JsonPropertyName("F")]
         public decimal? F { get; set; }
+
+        [JsonPropertyName("G")]
+        public decimal? Unappr { get; set; }
+
+        [JsonPropertyName("H")]
+        public decimal? Unposted { get; set; }
     }
 
     // -------------------- WoDetail --------------------
@@ -1142,6 +1164,9 @@ namespace ContractBudgetApi.Model
 
         [JsonPropertyName("billedPer")]
         public decimal? BilledPer { get; set; }
+
+        [JsonPropertyName("directExpense")]
+        public string? TotalDirectExpense { get; set; } = "XX";
     }
 
 

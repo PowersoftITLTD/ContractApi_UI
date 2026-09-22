@@ -90,6 +90,9 @@
         public decimal? d { get; set; }
         public decimal? e { get; set; }
         public decimal? f { get; set; }
+        public decimal? Unappr { get; set; }
+        public decimal? Unposted { get; set; }
+
     }
 
 
