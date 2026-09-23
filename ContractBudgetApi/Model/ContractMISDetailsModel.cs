@@ -124,6 +124,10 @@
         public string? billedPerc { get; set; }
         public string? constructionAreaRate { get; set; }
         public string? carpetAreaRate { get; set; }
+        public string? utilized { get; set; }
+        public string? balance { get; set; }
+        public string? overAllRate { get; set; }
+        public string? inclMigration { get; set; }
 
 
 

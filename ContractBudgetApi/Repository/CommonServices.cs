@@ -578,6 +578,10 @@ namespace ContractBudgetApi.Repository
                                                          CommittedPerc= g.First().committedPerc ,
                                                          ConstructionAreaRate= g.First().constructionAreaRate ,
                                                          CarpetAreaRate = g.First().carpetAreaRate ,
+                                                         Utilized= g.First().utilized,
+                                                         Balance= g.First().balance,
+                                                         OverAllRate= g.First().overAllRate,
+                                                         InclMigration= g.First().inclMigration,
 
                                                          // Alerts= 
                                                      })
