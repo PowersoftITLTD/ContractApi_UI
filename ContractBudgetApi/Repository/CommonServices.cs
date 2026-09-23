@@ -558,8 +558,8 @@ namespace ContractBudgetApi.Repository
                                                          Name = g.First().name,
                                                          Loc = g.First().location,
                                                          Stage = g.First().stage,
-                                                         IsReal = g.First().is_real ?? false ,
-                                                         Budget= Convert.ToDecimal(g.First().budget),
+                                                         IsReal = g.First().is_real ?? false,
+                                                         Budget = Convert.ToDecimal(g.First().budget),
                                                          Committed = Convert.ToDecimal(g.First().committed),
                                                          Billed = Convert.ToDecimal(g.First().billed),
                                                          Available = Convert.ToDecimal(g.First().available),
@@ -568,9 +568,16 @@ namespace ContractBudgetApi.Repository
                                                          Wos = Convert.ToInt32(g.First().wos),
                                                          BoqDesign = Convert.ToDecimal(g.First().boq_design),
                                                          BoqOrder = Convert.ToDecimal(g.First().boq_order),
-                                                         DirectExpense= "XX" ,
-                                                         ConstructionAreaRate= "XX",
-                                                         CarpetAreaRate= "XX",
+                                                         DirectExpense = g.First().directExpense ,  //"XX" ,
+                                                         ConstructionArea = g.First().constructionArea,  //"XX" ,
+                                                         ConstructionRate = g.First().constructionRate,  //"XX" ,
+                                                         CarpetArea = g.First().carpetArea,
+                                                         CarpetRate = g.First().CarpetRate,
+                                                         ProjectType = g.First().projectType ,
+                                                         BilledPerc= g.First().billedPerc ,
+                                                         CommittedPerc= g.First().committedPerc ,
+                                                         ConstructionAreaRate= g.First().constructionAreaRate ,
+                                                         CarpetAreaRate = g.First().carpetAreaRate ,
 
                                                          // Alerts= 
                                                      })
@@ -1186,8 +1193,6 @@ namespace ContractBudgetApi.Repository
             }
         }
 
-
-
         public async Task<ProjectTotalCount> GetProjectTotalCountDataAsync()
         {
             try
@@ -1207,9 +1212,6 @@ namespace ContractBudgetApi.Repository
                 throw;
             }
         }
-
-
-
 
     }
     

@@ -98,13 +98,37 @@ namespace ContractBudgetApi.Model
         //public decimal? totalAlert { get; set; }
 
         [JsonPropertyName("directExpense")]
-        public string? DirectExpense { get; set; } = "XX";
+        public string? DirectExpense { get; set; } 
 
+        [JsonPropertyName("constructionArea")]
+        public string? ConstructionArea { get; set; } 
+
+        [JsonPropertyName("constructionRate")]
+        public string? ConstructionRate { get; set; }
+
+        [JsonPropertyName("carpetArea")]
+        public string? CarpetArea{ get; set; } 
+
+
+        [JsonPropertyName("carpetRate")]
+        public string? CarpetRate { get; set; }
+
+        [JsonPropertyName("projectType")]
+        
+        public string? ProjectType { get; set; }
+
+        [JsonPropertyName("committedPerc")]
+
+        public string? CommittedPerc { get; set; }
+        [JsonPropertyName("billedPerc")]
+
+        public string? BilledPerc { get; set; }
         [JsonPropertyName("constructionAreaRate")]
-        public string? ConstructionAreaRate { get; set; } = "XX";
 
+        public string? ConstructionAreaRate { get; set; }
         [JsonPropertyName("carpetAreaRate")]
-        public string? CarpetAreaRate { get; set; } = "XX";
+
+        public string? CarpetAreaRate { get; set; }
 
     }
 
@@ -394,11 +418,18 @@ namespace ContractBudgetApi.Model
         [JsonPropertyName("avail")]
         public decimal Avail { get; set; }
 
-        [JsonPropertyName("contructionAreaRate")]
-        public string? ContructionAreaRate { get; set; } = "XX";
+        [JsonPropertyName("contructionArea")]
+        public string? ContructionArea { get; set; } 
+
+
+        [JsonPropertyName("contructionRate")]
+        public string? ContructionRate { get; set; } 
 
         [JsonPropertyName("carpetAreaRate")]
-        public string? CarpetAreaRate { get; set; } = "XX";
+        public string? CarpetAreaRate { get; set; }
+
+        [JsonPropertyName("contructionAreaRate")]
+        public string? ContructionAreaRate { get; set; }
 
 
     }

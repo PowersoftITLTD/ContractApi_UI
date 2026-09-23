@@ -113,6 +113,20 @@
         public string? boq_design { get; set; }
         public string? boq_order { get; set; }
 
+        public string? projectType { get; set; }
+
+        public string? directExpense { get; set; }
+        public string? constructionArea { get; set; }
+        public string? constructionRate { get; set; }
+        public string? carpetArea { get; set; }
+        public string? CarpetRate { get; set; }
+        public string? committedPerc { get; set; }
+        public string? billedPerc { get; set; }
+        public string? constructionAreaRate { get; set; }
+        public string? carpetAreaRate { get; set; }
+
+
+
     }
 
 }
