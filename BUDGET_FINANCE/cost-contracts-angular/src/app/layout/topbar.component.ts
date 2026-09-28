@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../core/services/data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { UnitSelectorComponent } from '../shared/unit-selector.component';
 
 @Component({
   selector: 'cc-topbar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, UnitSelectorComponent],
   template: `
   <div class="topbar">
     <div class="scope-toggle" [class.disabled]="isToggleDisabled">
@@ -42,6 +43,7 @@ import { filter } from 'rxjs';
     <span class="chip">FY 2026-27 · YTD</span>
 
     <div class="spacer"></div>
+    <cc-unit-selector></cc-unit-selector>
     <div class="entity-name">{{ds.entity()?.name}}<span>{{ds.entity()?.group}}</span></div>
   </div>`,
   styles: [`

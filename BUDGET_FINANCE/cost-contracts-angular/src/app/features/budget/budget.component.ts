@@ -4,10 +4,11 @@ import { DataService } from '../../core/services/data.service';
 import { KpiTileComponent } from '../../shared/kpi-tile.component';
 import { UiCardComponent } from '../../shared/ui-card.component';
 import { BackBarComponent } from '../../shared/back-bar.component';
-import { CrPipe, RupPipe, PctOfPipe } from '../../core/pipes/format.pipes';
+import { CrPipe, RupPipe, CurrPipe, CurrUnitPipe, PctOfPipe } from '../../core/pipes/format.pipes';
 import { BilledDetail, BudgetRow } from '../../core/models/models';
 
-type GroupAgg = { grp: string; desc: string; budget: number; util: number; bal: number; rate: number | null };
+type GroupAgg = { grp: string; desc: string; budget: number; util: number; bal: number; rate: number | null, contructionArea:string, contructionRate:string };
+
 type ProjectAgg = {
   id: string;
   name: string;
@@ -17,7 +18,14 @@ type ProjectAgg = {
   committed: number;
   billed: number;
   available: number;
+  constructionArea:string;
+  constructionRate:string;
+  carpetArea:string;
+  carpetRate:string;
   pct: number;
+  commitedPerc:string;
+  billedPerc:string;
+  projectType:string;
 };
 
 interface WopoDetail {
@@ -39,7 +47,7 @@ interface WopoDetail {
 @Component({
   selector: 'cc-budget',
   standalone: true,
-  imports: [CommonModule, KpiTileComponent, UiCardComponent, BackBarComponent, CrPipe, RupPipe],
+  imports: [CommonModule, KpiTileComponent, UiCardComponent, BackBarComponent, CrPipe, RupPipe, CurrPipe, CurrUnitPipe, PctOfPipe],
   template: `
     <!-- Conditional header based on scope -->
     <div class="crumb" id="crumb">{{ds.entity()?.name}} › {{ds.entity()?.group}} › <b>Project Budget &amp; Finance</b></div>
@@ -53,13 +61,12 @@ interface WopoDetail {
     <!-- CONSOLIDATED VIEW (entity scope) -->
     <ng-container *ngIf="ds.scope() === 'entity' && ds.level()==='summary'">
       <div class="kpi-row">
-        <cc-kpi cls="navy" [compact]="true" label="Portfolio Budget" [value]="'₹'+(portfolioTotal('budget')|cr)" unit="Cr" sub="A — all projects"></cc-kpi>
-        <cc-kpi label="Committed" [compact]="true" [value]="'₹'+(portfolioTotal('committed')|cr)" unit="Cr" sub="B — WO/PO issued"></cc-kpi>
-        <cc-kpi cls="good" [compact]="true" label="Billed Against commited" [value]="'₹'+(portfolioTotal('billed')|cr)" unit="Cr" sub="C - Billed Against WO/PO"></cc-kpi>
-        <cc-kpi cls="good" [compact]="true" label="Direct Expense" [value]="'--'"  sub="D - Billed Without WO/PO & JV"></cc-kpi> <!--'₹'+(portfolioTotal('billed')|cr) unit="Cr"-->
-        <cc-kpi cls="warn" [compact]="true" label="Available" [value]="'₹'+(portfolioTotal('available')|cr)" unit="Cr" sub="=A − B − D"></cc-kpi>
+        <cc-kpi cls="navy" [compact]="true" label="Portfolio Budget" [value]="'₹'+(entityData().projects_budget|cr)" unit="Cr" sub="A — all projects"></cc-kpi>
+        <cc-kpi label="Committed" [compact]="true" [value]="'₹'+(entityData().committed|cr)" unit="Cr" sub="B — WO/PO issued"></cc-kpi>
+        <cc-kpi cls="good" [compact]="true" label="Billed Against commited" [value]="'₹'+(entityData().totalbilled|cr)" unit="Cr" sub="C - Billed Against WO/PO"></cc-kpi>
+        <cc-kpi cls="good" [compact]="true" label="Direct Expense" [value]="'₹'+(entityData().directExpenses|cr)"  sub="D - Billed Without WO/PO & JV"></cc-kpi> <!--'₹'+(portfolioTotal('billed')|cr) unit="Cr"-->
+        <cc-kpi cls="warn" [compact]="true" label="Available" [value]="'₹'+(entityData().available|cr)" unit="Cr" sub="=A − B − D"></cc-kpi>
       </div>
-
       <cc-card title="Budget Finance — by project" hint="Consolidated across the legal entity · click a project for budget-code detail">
         <div class=tbl-scroll>
        <table class="compact">
@@ -84,29 +91,29 @@ interface WopoDetail {
   <tbody>
     <tr class="click" *ngFor="let p of projectSummaries()" (click)="openProject(p.id)">
       <td class="strong">
-        {{p.name}}
-        <span class="samp" *ngIf="p.sample">Residence</span>
+        {{p.name}} 
+        <span class="samp" *ngIf="p.projectType">{{p.projectType}}</span>
         <div class="mut" style="font-weight:400;font-size:10.5px">{{p.stage}}</div>
       </td>
-      <td class="num strong">--</td>
-      <td class="num strong">--</td>
-      <td class="num strong">--</td>
-      <td class="num strong">--</td>
+      <td class="num strong">{{p.constructionArea}}</td>
+      <td class="num strong">{{p.constructionRate}}</td>
+      <td class="num strong">{{p.carpetArea}}</td>
+      <td class="num strong">{{p.carpetRate}}</td>
       <td class="num strong">{{ p.budget | cr }}</td>
       <td class="num">{{ p.committed | cr }}</td>
       <td class="num">{{ p.billed | cr }}</td>
       <td class="num" [class.neg]="p.available < 0">{{ p.available | cr }}</td>
       <td style="width:130px">
         <div class="mini-bar">
-          <span [style.width.%]="p.pct"></span>
+          <span [style.width.%]="p.commitedPerc"></span>
         </div>
-        <div class="mut" style="font-size:10px;margin-top:3px">{{p.pct}}% committed</div>
+        <div class="mut" style="font-size:10px;margin-top:3px">{{p.commitedPerc}}% committed</div>
       </td>
     </tr>
   </tbody>
   <tfoot>
     <tr class="tfoot">
-      <td>Total · ₹ Cr</td>
+      <td>Total · {{ 'title' | currUnit }}</td>
       <td></td>
       <td></td>
       <td></td>
@@ -126,19 +133,19 @@ interface WopoDetail {
     <!-- PROJECT VIEW (project scope) -->
     <ng-container *ngIf="ds.scope() === 'project' && ds.level()==='summary'">
       <div class="kpi-row">
-        <cc-kpi [compact]="true" cls="navy" label="Project Budget" [value]="'₹'+(tB()|cr)" unit="Cr" [sub]="'--'"></cc-kpi>
-        <cc-kpi [compact]="true" cls="navy" label="Construction Area Rate" [value]="'₹'+ 'XXX'" unit="Cr" [sub]="'Overall per sqft'"></cc-kpi>
-        <cc-kpi [compact]="true" cls="navy" label="Carpet Area Rate" [value]="'₹'+ 'XXX'" unit="Cr" [sub]="'Carpt. rate inc of non tower area'"></cc-kpi>
+        <cc-kpi [compact]="true" cls="navy" label="Project Budget" [value]="'₹'+(selectedProject()?.budget|cr)" unit="Cr" [sub]="'--'"> </cc-kpi> 
+        <cc-kpi [compact]="true" cls="navy" label="Construction Area Rate" [value]="'₹'+ (selectedProject()?.constructionAreaRate|cr)" unit="Cr" [sub]="'Overall per sqft'"></cc-kpi>
+        <cc-kpi [compact]="true" cls="navy" label="Carpet Area Rate" [value]="'₹'+ (selectedProject()?.carpetAreaRate|cr)" unit="Cr" [sub]="'Carpt. rate inc of non tower area'"></cc-kpi>
         <cc-kpi
           cls="good"
           [compact]="true"
           label="Utilized"
-          [value]="'₹'+(tU()|cr)"
+          [value]="'₹'+(selectedProject()?.carpetAreaRate|cr)"
           unit="Cr"
           [sub]="getUtilizedSubText()">
         </cc-kpi>        
-        <cc-kpi [compact]="true" cls="warn" label="Balance" [value]="'₹'+(tBal()|cr)" unit="Cr" sub="Budget − Utilized"></cc-kpi>
-        <cc-kpi [compact]="true" label="Overall Rate / SqFt" [value]="area() ? ('₹'+round(oRate())) : '—'" [sub]="area()? (area()|number)+' SqFt' : 'area pending'"></cc-kpi>
+        <cc-kpi [compact]="true" cls="warn" label="Balance" [value]="'₹'+(selectedProject()?.balance|cr)" unit="Cr" sub="Budget − Utilized"></cc-kpi>
+        <cc-kpi [compact]="true" label="Overall Rate / SqFt" [value]="area() ? ('₹'+round(oRate())) : (selectedProject()?.overAllRate|cr)" [sub]="area()? (area()|number)+' SqFt' : 'pending'"></cc-kpi>
       </div>
       
       <cc-card title="Project Budget Approval — Budget Summary" hint="click a group to open its 9-series codes">
@@ -161,8 +168,8 @@ interface WopoDetail {
             <tbody>
               <tr class="click" *ngFor="let g of groups()" (click)="openGroup(g.grp)">
                 <td class="strong">{{g.desc}} </td>
-                <td class="num">{{ area() ? (area()|number) : '—' }}</td>
-                <td class="num">{{ g.rate!=null ? round(g.rate) : '—' }}</td>
+                <td class="num">{{ g.contructionArea  }}</td>
+                <td class="num">{{ g.contructionRate }}</td>
                 <td class="num strong">{{ g.budget | rup }}</td>
                 <td class="num">{{ g.util | rup }}</td>
                 <td class="num" [class.neg]="g.bal<0">{{ g.bal | rup }}</td>
@@ -189,7 +196,7 @@ interface WopoDetail {
     <ng-container *ngIf="ds.level()==='group'">
       <cc-backbar label="Budget Summary" (back)="ds.level.set('summary')"></cc-backbar>
       <div class="drill-head">{{group()}}</div>
-      <div class="drill-sub">{{codes().length}} budget codes · ₹ Cr · click a code to drill 7-series</div>
+      <div class="drill-sub">{{codes().length}} budget codes · {{ 'title' | currUnit }} · click a code to drill 7-series</div>
       <cc-card>        
         <div class="tbl-scroll">
           <table class="compact">
@@ -669,8 +676,7 @@ export class BudgetComponent {
 
   // Portfolio-level data for consolidated view
   projectSummaries = computed<ProjectAgg[]>(() => {
-    const projects = this.ds.projects();
-
+    const projects = this.ds.projects();    
     return projects.map(p => ({
       id: p.id,
       name: p.name,
@@ -680,9 +686,80 @@ export class BudgetComponent {
       committed: p.committed,
       billed: p.billed,
       available: p.available,
+      constructionArea:p.constructionArea,
+      constructionRate:p.constructionRate,
+      carpetArea:p.carpetArea,
+      carpetRate:p.carpetRate,
+      commitedPerc:p.committedPerc,
+      billedPerc:p.billedPerc,
+      projectType:p.projectType,
       pct: p.budget > 0 ? Math.round((p.committed / p.budget) * 100) : 0
     }));
   });
+
+  
+    entityData = computed(() => {
+
+    const project_counts_and_perc = this.ds.projectCount()?.projecttotalCount;
+    console.log('project_counts_and_perc: ', project_counts_and_perc);
+    const projects = this.ds.projects();
+    console.log('projects: ', projects)
+    const budget = this.ds.entitySum('budget');
+    const committed = project_counts_and_perc.totalcommitted// this.ds.entitySum('committed');
+    const woBilled = this.ds.entitySum('woBilled');
+    const directBilled = this.ds.entitySum('directBilled');
+    const available = project_counts_and_perc.totalAvailable; //this.ds.entitySum('available');
+
+      // const totalcommitted = project_counts_and_perc.totalcommitted
+
+    //projects budget
+    const projects_budget = project_counts_and_perc.totalbudget;//projects.reduce((count, p)=> count + (p.budget || 0), 0) || 0
+
+    // Count vendors across all projects
+    const vendors = project_counts_and_perc.totalvendor//projects.reduce((count, p) => count + (p.vendors || 0), 0) || 0;
+    
+    // Count alerts across all projects
+    const alerts = project_counts_and_perc.totalalert;//projects.reduce((count, p) => count + (p.alerts || 0), 0) || 0;
+
+    const UncommittedPer = project_counts_and_perc.UncommittedPer;
+
+    const totalbilled = project_counts_and_perc.totalbilled;
+
+    const directExpenses = project_counts_and_perc.directExpense;
+
+    return { budget, committed, woBilled, directBilled, available, vendors, alerts, projects_budget, UncommittedPer, totalbilled, directExpenses };
+  });
+
+ selectedProject = computed(() => {
+  const projects = this.ds.projects();
+  const selectedProjectId = this.ds.projectId();
+  const project = projects.find(p => p.id === selectedProjectId);
+
+  console.log('project log: ', project);
+  
+  if (!project) return null;
+
+  return {
+    id: project.id,
+    name: project.name,
+    stage: project.stage || '--',
+    sample: !project.isReal,
+    budget: project.budget,
+    committed: project.committed,
+    billed: project.billed,
+    available: project.available,
+    constructionArea: project.constructionArea,
+    constructionRate: project.constructionRate,
+    carpetArea: project.carpetArea,
+    carpetRate: project.carpetRate,
+    constructionAreaRate: project.constructionAreaRate,
+    carpetAreaRate:project.carpetAreaRate,
+    utilized:project.utilized,
+    balance:project.balance,
+    incl_migration:project.inclMigration,
+    overAllRate:project.overAllRate //project.budget > 0 ? Math.round((project.committed / project.budget) * 100) : 0,
+  };
+});
 
   wopoDetails_9series = computed<WopoDetail[]>(() => {
     const children_series = this.wopoSel_9series()?.children_series;
@@ -691,10 +768,8 @@ export class BudgetComponent {
     const woDetails = this.d()?.woDetails;
     if (!woDetails || woDetails.length === 0) return [];
 
-
     // Convert selection to a Set for faster lookup
     const selectedSet = new Set(children_series.map((id: any) => String(id)));
-
 
     // Filter woDetails by matching `code`
     const result: WopoDetail[] = woDetails.filter(item =>
@@ -796,6 +871,9 @@ export class BudgetComponent {
     const d = this.d();
     if (!d || this.ds.scope() === 'entity') return [];
 
+    
+
+    console.log('d.budget', d.budget)
     const a = this.area();
     return d.budget.map(b => ({
       grp: b.grp,
@@ -803,6 +881,8 @@ export class BudgetComponent {
       budget: b.A,
       util: b.C + b.D,
       bal: b.A - (b.C + b.D),
+      contructionArea: b.contructionArea,
+      contructionRate:b.contructionRate,
       rate: a ? b.A / a : null,
     }));
   });
@@ -958,6 +1038,7 @@ export class BudgetComponent {
   }
 
   openGroup(g: string) {
+
     this.group.set(g);
     this.ds.level.set('group');
   }
@@ -1033,11 +1114,9 @@ export class BudgetComponent {
 
 
 
-  budgetWO_9series(parentCode: any,
-    desc: string,
-    event?: MouseEvent) {
+  budgetWO_9series(parentCode: any, desc: string, event?: MouseEvent) {
 
-    const selected_9_series_code = parentCode//this.codeSel();
+    const selected_9_series_code = parentCode;//this.codeSel();
 
     if (!selected_9_series_code) return [];
 
@@ -1045,18 +1124,15 @@ export class BudgetComponent {
     const children_series = treeData?.children.map((s) => s.code)
     event?.stopPropagation();
 
-    if (!parentCode) {
-      console.warn('Parent 9-series code is missing');
+    if (!parentCode) { 
+      console.warn('Parent 9-series code is missing'); 
       return;
     }
 
-    this.wopoSel_9series.set({
-      parentCode,
-      children_series,
-      desc
-    });
+    this.wopoSel_9series.set({ parentCode, children_series, desc });
 
     this.ds.level.set('wopo_details_9ser');
+    
   }
 
   backbarLabel = computed(() => {
@@ -1205,6 +1281,6 @@ export class BudgetComponent {
 
     const colorClass = this.getPercentageColor(percentage);
 
-    return `<span class="tag ${colorClass}">${percentage}%</span> incl migration`;
+    return `<span class="tag ${colorClass}">${this.selectedProject()?.incl_migration}%</span> incl migration`;
   }
 }

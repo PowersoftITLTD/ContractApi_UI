@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DataService } from '../../core/services/data.service';
 import { KpiTileComponent } from '../../shared/kpi-tile.component';
 import { UiCardComponent } from '../../shared/ui-card.component';
-import { CrPipe, PctOfPipe } from '../../core/pipes/format.pipes';
+import { CrPipe, CurrPipe, CurrUnitPipe, PctOfPipe } from '../../core/pipes/format.pipes';
 import { Router } from '@angular/router';
 import { LoaderComponent } from '../../shared/loader.component';
 
 @Component({
   selector: 'cc-overview', 
   standalone: true,
-  imports: [CommonModule, KpiTileComponent, UiCardComponent, CrPipe, PctOfPipe],
+  imports: [CommonModule, KpiTileComponent, UiCardComponent, CrPipe, CurrPipe, CurrUnitPipe, PctOfPipe],
   template: `
 
 
@@ -18,7 +18,7 @@ import { LoaderComponent } from '../../shared/loader.component';
   <div class="page-sub" id="pgSub">
           <span>Budget · Commitments · Billing</span><span class="sep">·</span>
           <span>Civil core &amp; shell in progress</span><span class="sep">·</span>
-          <span>₹ in Crore unless noted</span>
+          <span>{{ 'title' | currUnit }} unless noted</span>
         </div>
   <ng-container *ngIf="projectCardCount() as x">
     <!-- PROJECT KPIs -->
@@ -66,28 +66,28 @@ import { LoaderComponent } from '../../shared/loader.component';
     <!-- PROJECT CARDS -->
     <div class="grid g2" *ngIf="ds.scope()==='project'">
       <div class="card">
-        <div class="card-h"><h3>Budget consumption — where the ₹{{ x.budget | cr }} Cr stands</h3><span class="hint">Billed · Committed-not-billed · Available</span></div>
+        <div class="card-h"><h3>Budget consumption — where the {{ x.budget | curr }} stands</h3><span class="hint">Billed · Committed-not-billed · Available</span></div>
         <div class="card-b">
           <div class="stack">
-            <div class="s-billed" [style.flex]="(x.woBilled + x.directBilled) / x.budget">₹{{ (x.woBilled + x.directBilled) | cr }} Cr billed</div>
-            <div class="s-commit" [style.flex]="(x.committed - (x.woBilled + x.directBilled)) / x.budget">₹{{ (x.committed - (x.woBilled + x.directBilled)) | cr }} Cr committed</div>
-            <div class="s-avail" [style.flex]="x.available / x.budget">₹{{ x.available | cr }} Cr free</div>
+            <div class="s-billed" [style.flex]="(x.woBilled + x.directBilled) / x.budget">{{ (x.woBilled + x.directBilled) | curr }} billed</div>
+            <div class="s-commit" [style.flex]="(x.committed - (x.woBilled + x.directBilled)) / x.budget">{{ (x.committed - (x.woBilled + x.directBilled)) | curr }} committed</div>
+            <div class="s-avail" [style.flex]="x.available / x.budget">{{ x.available | curr }} free</div>
           </div>
           <div class="legend">
             <span><i class="dot" style="background:var(--navy)"></i>Billed &amp; posted ({{ ((x.woBilled + x.directBilled) | pctOf:x.budget) }}%)</span>
             <span><i class="dot" style="background:var(--cyan)"></i>Committed, un-billed ({{ ((x.committed - (x.woBilled + x.directBilled)) | pctOf:x.budget) }}%)</span>
             <span><i class="dot" style="background:#E2D8C4"></i>Budget available ({{ (x.available | pctOf:x.budget) }}%)</span>
           </div>
-          <div class="note"><b>Reading it:</b> {{ (x.committed | pctOf:x.budget) }}% committed and {{ ((x.woBilled + x.directBilled) | pctOf:x.budget) }}% billed. ₹{{ x.available | cr }} Cr of budget is still available for release; ₹{{ (x.committed - (x.woBilled + x.directBilled)) | cr }} Cr is committed but not yet billed and will settle against future claims.</div>
+          <div class="note"><b>Reading it:</b> {{ (x.committed | pctOf:x.budget) }}% committed and {{ ((x.woBilled + x.directBilled) | pctOf:x.budget) }}% billed. {{ x.available | curr }} of budget is still available for release; {{ (x.committed - (x.woBilled + x.directBilled)) | curr }} is committed but not yet billed and will settle against future claims.</div>
         </div>
       </div>
       <div class="card">
         <div class="card-h"><h3>Attention</h3><span class="hint">Auto-flagged</span></div>
         <div class="card-b">
-          <div class="alert w"><span class="ic">⚠</span><div class="txt"><b>Committed vs billed gap ₹{{ (x.committed - (x.woBilled + x.directBilled)) | cr }} Cr</b> Work committed on WO/PO but not yet certified — track against RA progress.</div></div>
-          <div class="alert n"><span class="ic">◷</span><div class="txt"><b>Retention held ₹{{ (x.retentionHeld || 0) | cr }} Cr</b>Withheld across vendors — release schedule tied to defect-liability completion.</div></div>
+          <div class="alert w"><span class="ic">⚠</span><div class="txt"><b>Committed vs billed gap {{ (x.committed - (x.woBilled + x.directBilled)) | curr }}</b> Work committed on WO/PO but not yet certified — track against RA progress.</div></div>
+          <div class="alert n"><span class="ic">◷</span><div class="txt"><b>Retention held {{ (x.retentionHeld || 0) | curr }}</b>Withheld across vendors — release schedule tied to defect-liability completion.</div></div>
           <div class="alert b"><span class="ic">●</span><div class="txt"><b>BOQ cost creep</b>Ordered BOQ above design — review the BOQ Comparison tab before further RA certification.</div></div>
-          <div class="alert w"><span class="ic">⚠</span><div class="txt"><b>Billed without PO/WO or JV ₹{{ (x.directBilled || 0) | cr }} Cr</b>Bills posted directly to budget codes (not via WO) — verify in Budget & Finance drill.</div></div>
+          <div class="alert w"><span class="ic">⚠</span><div class="txt"><b>Billed without PO/WO or JV {{ (x.directBilled || 0) | curr }}</b>Bills posted directly to budget codes (not via WO) — verify in Budget & Finance drill.</div></div>
         </div>
       </div>
     </div>
@@ -100,35 +100,35 @@ import { LoaderComponent } from '../../shared/loader.component';
         <div class="pc-stage">{{ p.stage || 'Active' }}</div>
         <div class="pc-name">
           {{ p.name }}
-          <span *ngIf="p" class="samp">SAMPLE</span>
+          <span *ngIf="p.projectType" class="samp">{{p.projectType}}</span>
         </div>
         <div class="pc-loc">{{ p.loc || 'Location TBD' }}</div>
         <div class="pc-mini">
           <div>
             <div class="l">Budget</div>
-            <div class="v">₹{{ p.budget | cr }}</div>
+            <div class="v">{{ p.budget | curr }}</div>
           </div>
           <div>
             <div class="l">Commited</div>
-            <div class="v">₹{{ p.committed | cr }}</div>
+            <div class="v">{{ p.committed | curr }}</div>
           </div>
         </div>
         <div class="pc-mini">
           <div>
             <div class="l">Billed</div>
-            <div class="v">₹{{ p.billed | cr }}</div>
+            <div class="v">{{ p.billed | curr }}</div>
           </div>
           <div>
             <div class="l">Available</div>
-            <div class="v">₹{{ p.available | cr }}</div>
+            <div class="v">{{ p.available | curr }}</div>
           </div>
         </div>
         <div class="pc-bar">
           <span [style.width]="(p.committed | pctOf:p.budget) + '%'"></span>
         </div>
         <div class="pc-go">
-          {{ p.committed | pctOf:p.budget }}% committed · 
-          {{ p.billed | pctOf:p.budget }}% billed · open project →
+          {{ p.committedPerc }}% committed · 
+          {{ p.billedPerc }}% billed · open project →
         </div>
       </div>
     </div>
@@ -199,7 +199,9 @@ export class OverviewComponent {
   entityData = computed(() => {
 
     const project_counts_and_perc = this.ds.projectCount()?.projecttotalCount;
+    console.log('project_counts_and_perc: ', project_counts_and_perc);
     const projects = this.ds.projects();
+    console.log('projects: ', projects)
     const budget = this.ds.entitySum('budget');
     const committed = project_counts_and_perc.totalcommitted// this.ds.entitySum('committed');
     const woBilled = this.ds.entitySum('woBilled');
@@ -243,9 +245,6 @@ export class OverviewComponent {
 
   const unCommitedcommitted = project_counts_and_perc.UncommittedPer;
   const commiterdPer = project_counts_and_perc.committedPer
-
-  console.log('commited percentage: ', commiterdPer)
-
 
   const cr = (value: number | null | undefined) =>  ((Number(value) || 0) / 1_00_00_000).toFixed(2);
     return {

@@ -13,7 +13,9 @@ export interface ProjectCard {
   id: string; name: string; loc: string; stage: string; isReal: boolean;
   budget: number; committed: number; billed: number; available: number;  // ₹Cr
   retention: number; vendors: number; wos: number; alerts: number;
-  boqDesign: number; boqOrder: number;
+  boqDesign: number; boqOrder: number, constructionArea:string, constructionRate:string;
+  carpetArea:string; carpetRate:string, constructionAreaRate:number, carpetAreaRate:number;
+  utilized:number; balance:number; inclMigration: number; overAllRate:number, committedPerc:string, billedPerc:string; projectType:string
 }
 
 
@@ -176,7 +178,10 @@ export interface BudgetRow {
   D: number;  // Billed part 2
   E: number;  // Other
   avail: number;
-   unappr?:number; unposted?:number;
+  unappr?:number; unposted?:number;
+  contructionArea:string;
+  contructionRate:string;
+
 }
 
 export interface Project {
