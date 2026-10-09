@@ -509,7 +509,6 @@ namespace ContractBudgetApi.Repository
                     $"Invalid Base64 content. Length={base64.Length}", ex);
             }
         }
-
         public async Task<CommonResponse> GetProjectDataAsync(string sessionUserId, string parameter1)
         {
             var commonresponse = new CommonResponse();
@@ -1196,7 +1195,6 @@ namespace ContractBudgetApi.Repository
                 throw;
             }
         }
-
         public async Task<ProjectTotalCount> GetProjectTotalCountDataAsync()
         {
             try
