@@ -14,7 +14,12 @@ import { CurrencyUnitService } from '../core/services/currency-unit.service';
     </div>
   `,
   styles: [`
-    :ng-deep.seg {
+
+  :host {
+     display: inline-block;
+      vertical-align: middle;
+  }
+  .seg {
       display: inline-flex;
       font-size: small;  
       border: 1px solid var( #E4DCC9, #e4dcc9);
@@ -25,7 +30,7 @@ import { CurrencyUnitService } from '../core/services/currency-unit.service';
       vertical-align: middle;
     }
 
-    ::ng-deep.seg button {
+    .seg button {
       padding: 5px 12px;
       font-size: 0.65rem;
       font-family: inherit;

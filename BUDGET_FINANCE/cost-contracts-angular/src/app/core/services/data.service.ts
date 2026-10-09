@@ -6,7 +6,7 @@ import { DashboardPayload, Scope, ProjectData } from "../models/models";
 
 @Injectable({ providedIn:'root' })
 export class DataService {
-  private _payload = signal<DashboardPayload | null>(null);
+  private  _payload = signal<DashboardPayload | null>(null);
   projectId = signal<string>('FWG');
   scope     = signal<Scope>('entity');
   loader    = signal<boolean>(false); // loader state
