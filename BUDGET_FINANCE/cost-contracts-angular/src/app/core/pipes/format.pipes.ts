@@ -79,5 +79,60 @@ export class InrPipe implements PipeTransform {
 export class PctOfPipe implements PipeTransform {
   transform(part: number, whole: number): number {
     return whole ? Math.round((part / whole) * 100) : 0;
+  }  
+}
+
+
+@Pipe({ name: 'distinctBy', standalone: true })
+export class DistinctByPipe implements PipeTransform {
+  transform<T>(arr: T[] | null, key: keyof T): T[] {
+    if (!arr) return [];
+    const seen = new Set<any>();
+    return arr.filter(x => {
+      const k = x[key];
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+  }
+}
+
+/** Filters budget rows while retaining a 9-series row when one of its 7-series
+ * children matches. The optional budget rows let group summaries stay visible
+ * when any nested code in that group matches. */
+@Pipe({ name: 'budgetTreeSearch', standalone: true })
+export class BudgetTreeSearchPipe implements PipeTransform {
+  transform<T extends object>(
+    rows: T[] | null | undefined,
+    query: string,
+    budgetTree?: Record<string, { children?: Array<{ code?: string | number; desc?: string }> }>,
+    allBudgetRows?: Array<Record<string, any>>,
+    nestedDetails?: Record<string, object[]>
+  ): T[] {
+    const list = rows ?? [];
+    const term = (query ?? '').trim().toLocaleLowerCase();
+    if (!term) return list;
+
+    const matches = (row: object) =>
+      Object.values(row).some(value =>
+        value != null && String(value).toLocaleLowerCase().includes(term));
+    const detailsMatch = (code: string | number | undefined) =>
+      code != null && (nestedDetails?.[String(code)] ?? []).some(matches);
+    const childrenMatch = (code: string | number) =>
+      (budgetTree?.[String(code)]?.children ?? []).some(child =>
+        matches(child) || detailsMatch(child.code));
+
+    // Group aggregates include budget/util numbers; search their label and
+    // retain a group when one of its nested codes/children matches.
+    // console.log('budgetTree: ', budgetTree);
+    if (list.length && 'grp' in list[0] && !('code' in list[0])) {
+      return list.filter(group => {
+        if (matches(group)) return true;
+        return (allBudgetRows ?? []).some(row => row.grp === (group as any)['grp'] &&
+          (matches(row) || childrenMatch((row as any).code)));
+      });
+    }
+
+    return list.filter(row => matches(row) || childrenMatch((row as any)['code']) || detailsMatch((row as any)['code']));
   }
 }

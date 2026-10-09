@@ -14,9 +14,7 @@ import { CurrencyUnitService } from '../core/services/currency-unit.service';
     <div class="k-bar" *ngIf="bar!=null"><span [style.width.%]="bar"></span></div>
   </div>`,
   styles: [`
-    .kpi.compact {
-      min-height: 0;
-    }
+    .kpi.compact { min-height: 0; z-index: -999 !important; }
   `]
 })
 export class KpiTileComponent {

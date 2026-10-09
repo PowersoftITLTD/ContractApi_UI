@@ -1248,24 +1248,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\itemadh\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\hiteshg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Itemad Hyder Laptop Data\\Data\\User Profile\\Itemad Hyder\\itemad Repo\\ContractBudgetApi\\ContractBudgetApi\\ContractBudgetApi.csproj",
+      "projectUniqueName": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\ContractBudgetApi.csproj",
       "projectName": "ContractBudgetApi",
-      "projectPath": "E:\\Itemad Hyder Laptop Data\\Data\\User Profile\\Itemad Hyder\\itemad Repo\\ContractBudgetApi\\ContractBudgetApi\\ContractBudgetApi.csproj",
-      "packagesPath": "C:\\Users\\itemadh\\.nuget\\packages\\",
-      "outputPath": "E:\\Itemad Hyder Laptop Data\\Data\\User Profile\\Itemad Hyder\\itemad Repo\\ContractBudgetApi\\ContractBudgetApi\\obj\\",
+      "projectPath": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\ContractBudgetApi.csproj",
+      "packagesPath": "C:\\Users\\hiteshg\\.nuget\\packages\\",
+      "outputPath": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\itemadh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\hiteshg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1290,8 +1285,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -1341,7 +1335,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

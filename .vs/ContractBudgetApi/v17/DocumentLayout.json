@@ -1,0 +1,117 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\DATA\\ContractApi_UI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\repository\\commonservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\repository\\commonservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\controllers\\contractbudgetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\controllers\\contractbudgetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|d:\\data\\contractapi_ui\\contractbudgetapi\\repository\\authservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D56E2AB0-72B7-4089-B5EC-B32EBCFD923A}|ContractBudgetApi\\ContractBudgetApi.csproj|solutionrelative:contractbudgetapi\\repository\\authservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ContractBudgetController.cs",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Controllers\\ContractBudgetController.cs",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\Controllers\\ContractBudgetController.cs",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Controllers\\ContractBudgetController.cs",
+              "RelativeToolTip": "ContractBudgetApi\\Controllers\\ContractBudgetController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-07T10:20:30.435Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CommonServices.cs",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Repository\\CommonServices.cs",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\Repository\\CommonServices.cs",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Repository\\CommonServices.cs",
+              "RelativeToolTip": "ContractBudgetApi\\Repository\\CommonServices.cs",
+              "ViewState": "AQIAAFADAAAAAAAAAAAUwCwDAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-07T10:20:02.55Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthServices.cs",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Repository\\AuthServices.cs",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\Repository\\AuthServices.cs",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Repository\\AuthServices.cs",
+              "RelativeToolTip": "ContractBudgetApi\\Repository\\AuthServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALEAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T13:04:28.803Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "ContractBudgetApi\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAwwDAAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T13:04:20.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\appsettings.json",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\appsettings.json",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\appsettings.json",
+              "RelativeToolTip": "ContractBudgetApi\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-06T12:19:20.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Program.cs",
+              "RelativeDocumentMoniker": "ContractBudgetApi\\Program.cs",
+              "ToolTip": "D:\\DATA\\ContractApi_UI\\ContractBudgetApi\\Program.cs",
+              "RelativeToolTip": "ContractBudgetApi\\Program.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAAADcAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T12:19:14.26Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

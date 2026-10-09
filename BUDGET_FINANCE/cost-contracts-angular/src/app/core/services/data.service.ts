@@ -10,6 +10,7 @@ export class DataService {
   projectId = signal<string>('FWG');
   scope     = signal<Scope>('entity');
   loader    = signal<boolean>(false); // loader state
+  searchQuery = signal<string>('');
   level = signal<'summary' | 'group' | 'code' | 'wopo_details' | 'wopojv' | 'wopo_details_9ser' | 'wopojv_9series'>('summary');
   
   payload  = computed(() => this._payload());
@@ -29,7 +30,7 @@ export class DataService {
   });
 
   constructor(private http: HttpClient) {
-    const url = !APP_CONFIG.useApi ? `${APP_CONFIG.apiBase2}/ContractBudget/ContractBudget` : APP_CONFIG.dataUrl;
+    const url =  `${APP_CONFIG.apiBase2}/ContractBudget/ContractBudget`//!APP_CONFIG.useApi ? `${APP_CONFIG.apiBase2}/ContractBudget/ContractBudget` : APP_CONFIG.dataUrl;
 
     // 1. Turn on the loader immediately before the HTTP request starts
     this.loader.set(true);
@@ -43,8 +44,6 @@ export class DataService {
         next: (response) => {
           const payload = response?.data;
           this._payload.set(payload);
-
-          // console.log('payload: ', payload)
         },
         error: (err) => {
           console.error('Error fetching data:', err);
@@ -60,6 +59,7 @@ export class DataService {
   
   setScope(s: Scope) { 
     this.scope.set(s); 
+    console.log('Check scope: ', s);
     this.level.set('summary');             
   }
   
