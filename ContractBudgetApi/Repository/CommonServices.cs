@@ -34,7 +34,6 @@ namespace ContractBudgetApi.Repository
             //_env = (HostEnvironment)env.Value;
             _env = env.Value;
         }
-
         private byte[] GetKey(string keyString, int requiredLength)     // Static
         {
             if (keyString == null) keyString = string.Empty;
@@ -48,7 +47,6 @@ namespace ContractBudgetApi.Repository
             // If key is shorter: remaining bytes are zero (default)
             return resized;
         }
-
         public string EncryptionObje<T>(T obj, string keyString)
         {
             string json = System.Text.Json.JsonSerializer.Serialize(obj);
@@ -471,7 +469,6 @@ namespace ContractBudgetApi.Repository
         //        throw new FormatException("Invalid Base64 FILECONTENTVAR", ex);
         //    }
         //}
-
         public static byte[] Base64ToVarbinarySafe(string base64)
         {
             if (string.IsNullOrWhiteSpace(base64))
@@ -509,7 +506,6 @@ namespace ContractBudgetApi.Repository
                     $"Invalid Base64 content. Length={base64.Length}", ex);
             }
         }
-
         public async Task<CommonResponse> GetProjectDataAsync(string sessionUserId, string parameter1)
         {
             var commonresponse = new CommonResponse();
@@ -1196,7 +1192,6 @@ namespace ContractBudgetApi.Repository
                 throw;
             }
         }
-
         public async Task<ProjectTotalCount> GetProjectTotalCountDataAsync()
         {
             try

@@ -435,6 +435,15 @@ namespace ContractBudgetApi.Model
         [JsonPropertyName("contructionAreaRate")]
         public string? ContructionAreaRate { get; set; }
 
+        [JsonPropertyName("utilized")]
+        public string? utilized { get; set; }
+
+        [JsonPropertyName("balance")]
+        public string? balance { get; set; }
+
+        [JsonPropertyName("rate")]
+        public string? rate { get; set; }
+
 
     }
 
