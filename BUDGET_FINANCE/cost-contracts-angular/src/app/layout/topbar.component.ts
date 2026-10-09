@@ -40,6 +40,24 @@ import { Scope } from '../core/models/models';
     </div>
 
     <!-- Legal entity picker -->
+         <cc-search *ngIf="!isToggleDisabled" (search)="handleSearch($event)"></cc-search>
+
+
+    <!-- Chips -->
+    <!-- <div class="chips">
+      <span class="chip live" id="stageChip">
+        <span class="live-dot"></span>
+        {{ ds.scope() === 'project' ? selectedStage() : 'All projects' }}
+      </span>
+      <span class="chip subtle">FY 2026-27 · YTD</span>
+    </div> -->
+
+    <div class="spacer"></div>
+
+    <!-- Right cluster -->
+    <div class="actions">
+
+
     <div class="proj" [class.disabled]="isProjectSelectorDisabled">
       <label class="field-label" for="projPick">LEGAL ENTITY</label>
       <div class="select-wrap">
@@ -55,22 +73,8 @@ import { Scope } from '../core/models/models';
         </svg>
       </div>
     </div>
+    <cc-unit-selector></cc-unit-selector>
 
-    <!-- Chips -->
-    <div class="chips">
-      <span class="chip live" id="stageChip">
-        <span class="live-dot"></span>
-        {{ ds.scope() === 'project' ? selectedStage() : 'All projects' }}
-      </span>
-      <span class="chip subtle">FY 2026-27 · YTD</span>
-    </div>
-
-    <div class="spacer"></div>
-
-    <!-- Right cluster -->
-    <div class="actions">
-      <cc-search *ngIf="!isToggleDisabled" (search)="handleSearch($event)"></cc-search>
-      <cc-unit-selector></cc-unit-selector>
       <div class="divider"></div>
       <div class="entity-name">
         <span class="name">{{ds.entity()?.name}}</span>
@@ -286,14 +290,14 @@ export class TopbarComponent {
 
   constructor() {
     this.isOverviewRoute.set(this.router.url.includes('/overview'));
-      this.syncScopeWithRoute();          // ← handle initial deep-link
+    this.syncScopeWithRoute();          // ← handle initial deep-link
 
     effect(() => { this.selectedStage(); });
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.isOverviewRoute.set(this.router.url.includes('/overview'));
-          this.syncScopeWithRoute();        // ← MISSING: run on every route change
+      this.syncScopeWithRoute();        // ← MISSING: run on every route change
 
     });
   }
@@ -307,8 +311,8 @@ export class TopbarComponent {
   }
 
   private syncScopeWithRoute() {
-  if (this.isOverviewRoute() && this.ds.scope() !== 'entity') {
-    this.ds.setScope('entity');
+    if (this.isOverviewRoute() && this.ds.scope() !== 'entity') {
+      this.ds.setScope('entity');
+    }
   }
-}
 }

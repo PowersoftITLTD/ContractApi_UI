@@ -14,18 +14,20 @@ import { CurrencyUnitService } from '../core/services/currency-unit.service';
     </div>
   `,
   styles: [`
-    .seg {
+    :ng-deep.seg {
       display: inline-flex;
-      border: 1px solid var(--line, #e4dcc9);
+      font-size: small;  
+      border: 1px solid var( #E4DCC9, #e4dcc9);
       border-radius: 8px;
       overflow: hidden;
       background: var(--card, #ffffff);
       box-shadow: 0 1px 2px rgba(20,24,31,.04);
       vertical-align: middle;
     }
-    .seg button {
+
+    ::ng-deep.seg button {
       padding: 5px 12px;
-      font-size: 11.5px;
+      font-size: 0.65rem;
       font-family: inherit;
       font-weight: 600;
       color: var(--t2, #5a5f69);
@@ -37,6 +39,7 @@ import { CurrencyUnitService } from '../core/services/currency-unit.service';
       line-height: 1.3;
       user-select: none;
     }
+    
     .seg button:last-child {
       border-right: none;
     }
