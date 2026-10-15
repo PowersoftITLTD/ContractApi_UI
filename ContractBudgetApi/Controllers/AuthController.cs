@@ -123,14 +123,62 @@ namespace ContractBudgetApi.Controllers
         //    }
         //}
 
-        //[HttpPost("Login/Registration")]
+        [HttpPost("Login/Registration")]
 
-        //public async Task<IActionResult> LoginRegistration(UserLoginModel userLogin)   //, jsonEncryptModel jsonEncrypt
+        public async Task<IActionResult> LoginRegistration([FromBody]UserLoginModel userLogin)   //, jsonEncryptModel jsonEncrypt
+        {
+            var responseObject = new ResponseObject();
+            try
+            {
+                //var userLogin = _commonService.DecryptObject<UserLoginModel>(jsonEncrypt.jsonEncrypt, keyString);
+                if (userLogin == null || string.IsNullOrEmpty(userLogin.LoginName) || string.IsNullOrEmpty(userLogin.PasswordHash))
+                {
+                    responseObject.Status = "Error";
+                    responseObject.Message = "Please enter a valid LoginName and password.";
+                    return Ok(responseObject);
+                    //return Ok(new { message = "Please Entry Valide User & Password " });
+                }
+
+                var result = await _authService.LoginRegistration(userLogin);
+                if (result.Contains("Success"))
+                {
+                    // Return result as an Ok response
+                    responseObject.Status = "Ok";
+                    responseObject.Message = result;
+                    //responseObject.Data = userLogin;
+                    return Ok(responseObject);
+                }
+                else
+                {
+                    // Return result as an Ok response
+                    responseObject.Status = "Error";
+                    responseObject.Message = result;
+                    responseObject.Data = userLogin;
+                    return Ok(responseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                responseObject.Status = "Error";
+                responseObject.Message = "An error occurred during login/registration.";
+                responseObject.Data = new { error = ex.Message };
+                return StatusCode(500, responseObject);
+                // Log and return error response
+                // return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+
+            }
+        }
+
+        //[HttpPost("Login/Registration_PS")]
+
+        //public async Task<IActionResult> LoginRegistration_PS([FromBody] UserLoginModel userLogin)   //jsonEncryptModel jsonEncrypt   UserLoginModel userLogin
         //{
         //    var responseObject = new ResponseObject();
         //    try
         //    {
-        //        //var userLogin = _commonService.DecryptObject<UserLoginModel>(jsonEncrypt.jsonEncrypt, keyString);
+        //        var EncryptionLoginRegistration= _commonService.EncryptionObje<UserLoginModel>(userLogin, keyString);
+        //        var userLogins = _commonService.DecryptObject<UserLoginModel>(EncryptionLoginRegistration, keyString);
         //        if (userLogin == null || string.IsNullOrEmpty(userLogin.LoginName) || string.IsNullOrEmpty(userLogin.PasswordHash))
         //        {
         //            responseObject.Status = "Error";
@@ -145,7 +193,7 @@ namespace ContractBudgetApi.Controllers
         //            // Return result as an Ok response
         //            responseObject.Status = "Ok";
         //            responseObject.Message = result;
-        //            //responseObject.Data = userLogin;
+        //            responseObject.Data = userLogin;
         //            return Ok(responseObject);
         //        }
         //        else
@@ -154,54 +202,6 @@ namespace ContractBudgetApi.Controllers
         //            responseObject.Status = "Error";
         //            responseObject.Message = result;
         //            responseObject.Data = userLogin;
-        //            return Ok(responseObject);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        responseObject.Status = "Error";
-        //        responseObject.Message = "An error occurred during login/registration.";
-        //        responseObject.Data = new { error = ex.Message };
-        //        return StatusCode(500, responseObject);
-        //        // Log and return error response
-        //        // return StatusCode(500, new { message = "An error occurred", error = ex.Message });
-
-        //    }
-        //}
-
-        //[HttpPost("Login/Registration_PS")]
-
-        //public async Task<IActionResult> LoginRegistration_PS([FromBody] CommonEncryption_Model jsonEncrypt)   //jsonEncryptModel jsonEncrypt   UserLoginModel userLogin
-        //{
-        //    var responseObject = new ResponseObject();
-        //    try
-        //    {
-        //        //var EncryptionLoginRegistration= _commonService.EncryptionObje<UserLoginModel>(userLogin, keyString);
-        //        var userLogin = _commonService.DecryptObject<UserLoginModel>(jsonEncrypt.jsonEncrypt, keyString);
-        //        if (userLogin == null || string.IsNullOrEmpty(userLogin.LoginName) || string.IsNullOrEmpty(userLogin.PasswordHash))
-        //        {
-        //            responseObject.Status = "Error";
-        //            responseObject.Message = "Please enter a valid LoginName and password.";
-        //            return Ok(responseObject);
-        //            //return Ok(new { message = "Please Entry Valide User & Password " });
-        //        }
-
-        //        var result = await _authService.LoginRegistration(userLogin);
-        //        if (result.Contains("Success"))
-        //        {
-        //            // Return result as an Ok response
-        //            responseObject.Status = "Ok";
-        //            responseObject.Message = result;
-        //            responseObject.Data = jsonEncrypt;
-        //            return Ok(responseObject);
-        //        }
-        //        else
-        //        {
-        //            // Return result as an Ok response
-        //            responseObject.Status = "Error";
-        //            responseObject.Message = result;
-        //            responseObject.Data = jsonEncrypt;
         //            return Ok(responseObject);
         //        }
         //    }
