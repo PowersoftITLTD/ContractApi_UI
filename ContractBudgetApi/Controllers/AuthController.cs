@@ -25,13 +25,14 @@ namespace ContractBudgetApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserModel userModel)   //UserModel userModel
+        public async Task<IActionResult> Login([FromBody] CommonEncryption_Model jsonEncrypt)   //UserModel userModel
         {
             var keyString = _configuration["EncryptionKey"];
             var responseObject = new ResponseObject();
             try
             {
-                var EncrypteduserModel = _commonService.EncryptionObje<UserModel>(userModel, keyString);
+                //var EncrypteduserModel = _commonService.EncryptionObje<UserModel>(userModel, keyString);
+                var userModel = _commonService.DecryptObject<UserModel>(jsonEncrypt.jsonEncrypt, keyString);
                 if (userModel == null || string.IsNullOrEmpty(userModel.Username) || string.IsNullOrEmpty(userModel.Password))
                 {
                     responseObject.Status = "Error";

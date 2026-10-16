@@ -37,4 +37,9 @@
     {
         public string FilePath { get; set; }
     }
+
+    public class CommonEncryption_Model
+    {
+        public string? jsonEncrypt { get; set; }
+    }
 }

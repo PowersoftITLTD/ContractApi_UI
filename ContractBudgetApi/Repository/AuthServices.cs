@@ -15,7 +15,6 @@ namespace ContractBudgetApi.Repository
     {
         private readonly IConfiguration _configuration;
         private readonly SqlConnection _connection;
-
         public AuthServices(IConfiguration configuration, SqlConnection sqlConnection)  //IUserService userService,
         {
             //_userService = userService;
